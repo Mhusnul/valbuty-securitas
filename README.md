@@ -1,12 +1,74 @@
-# React + Vite
+# Valbury Sekuritas Landing Page Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page ini adalah proyek pribadi yang dibuat untuk latihan dan pengembangan skill front-end. Desain dan kontennya meniru halaman utama dari website **KB Valbury Sekuritas**, dibangun menggunakan **React (Vite)**, **Tailwind CSS**, dan animasi **Framer Motion**.
 
-Currently, two official plugins are available:
+## 🧰 Teknologi yang Digunakan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚛️ [React](https://reactjs.org/)
+- ⚡ [Vite](https://vitejs.dev/)
+- 🎨 [Tailwind CSS](https://tailwindcss.com/)
+- 🎞️ [Framer Motion](https://www.framer.com/motion/)
+- 📦 [Lucide Icons](https://lucide.dev/) (untuk ikon SVG)
 
-## Expanding the ESLint configuration
+## 🚀 Fitur Utama
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Layout responsif untuk desktop dan mobile.
+- Komponen reusable menggunakan props dan struktur modular.
+- Efek animasi saat scroll menggunakan Framer Motion.
+- Hover effect dinamis (misal: gambar hilang saat hover, shadow bertambah, dll).
+- Form dan tombol interaktif.
+- Gambar dan ilustrasi sesuai dengan branding Valbury.
+
+## 🖼️ Tampilan Halaman
+
+- **Hero Section**: Latar belakang gambar, teks utama, dan tombol aksi.
+- **Services**: Dua kotak layanan dengan gambar dan animasi hover.
+- **Footer**: Informasi kontak, logo, dan tombol download app.
+
+## 🏁 Instalasi
+
+```bash
+# Clone repositori ini
+git clone https://github.com/username/valbury-landing-page.git
+cd valbury-landing-page
+
+# Install dependency
+npm install
+
+# Jalankan di mode development
+npm run dev
+```
+
+## 📁 Struktur Folder
+
+```bash
+src/
+├── assets/            # Gambar dan ikon statis
+├── components/        # Komponen reusable (Navbar, Footer, Hero, Section, dll)
+├── pages/             # Halaman utama atau bagian besar (Home, Services, dsb)
+├── App.jsx            # Root component
+├── main.jsx           # Entry point React
+├── index.css          # Import Tailwind base styles
+```
+
+## 🛠️ Fitur Animasi (Framer Motion)
+
+File `Section.jsx` dibuat sebagai komponen pembungkus yang otomatis memberi animasi muncul saat scroll.
+
+Contoh penggunaan:
+
+```jsx
+import Section from "./components/Section";
+
+<Section>
+  <div>Konten yang akan muncul saat discroll</div>
+</Section>;
+```
+
+## 🧾 License
+
+Proyek ini dibuat hanya untuk **tujuan edukasi** dan tidak untuk penggunaan komersial. Semua hak cipta dan merek dagang dimiliki oleh **Valbury Sekuritas**.
+
+---
+
+© 2025 – Dibuat dengan ❤️ oleh Muhamad Husnul
