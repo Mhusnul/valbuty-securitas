@@ -1,5 +1,4 @@
-import React from "react";
-import Navbar from "./component/NAvbar";
+import Navbar from "./component/Navbar";
 import Corousel from "./component/Corousel";
 import Services from "./component/Services";
 import Hero from "./component/Hero";
