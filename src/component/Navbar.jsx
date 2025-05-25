@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 function Navbar() {
   return (
     <div className="relative z-10">
-      <div className="navbar bg-base-100 shadow-lg px-25 pb-5 fixed ">
+      <div className="navbar bg-base-100 shadow-lg md:px-25 pb-5 fixed ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -51,13 +51,50 @@ function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-6 text-black font-semibold text-lg">
             <li>
-              <p className="hover:text-yellow-500 hover:bg-transparent ">
+              <a className="hover:text-yellow-500 hover:bg-transparent dropdown dropdown-hover ">
                 About Us
-              </p>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                >
+                  <li>
+                    <a>Company Overview</a>
+                  </li>
+                  <li>
+                    <a>Vision, Mission & Core Values</a>
+                  </li>
+                  <li>
+                    <a>Management</a>
+                  </li>
+                  <li>
+                    <a>Corporate Governance</a>
+                  </li>
+                  <li>
+                    <a>Career</a>
+                  </li>
+                </ul>
+              </a>
             </li>
             <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent ">
+              <a className="hover:text-yellow-500 hover:bg-transparent dropdown dropdown-hover">
                 Services
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                >
+                  <li>
+                    <a> Brokerage</a>
+                  </li>
+                  <li>
+                    <a>Investment Banking</a>
+                  </li>
+                  <li>
+                    <a>Mutual Fund</a>
+                  </li>
+                  <li>
+                    <a>Fixed Income</a>
+                  </li>
+                </ul>
               </a>
             </li>
             <li>
