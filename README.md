@@ -21,9 +21,12 @@ Landing page ini adalah proyek pribadi yang dibuat untuk latihan dan pengembanga
 
 ## 🖼️ Tampilan Halaman
 
-- **Hero Section**: Latar belakang gambar, teks utama, dan tombol aksi.
-- **Services**: Dua kotak layanan dengan gambar dan animasi hover.
-- **Footer**: Informasi kontak, logo, dan tombol download app.
+- **Hero Section**: ![image](https://github.com/user-attachments/assets/3fbaaa4f-cd49-4d68-a61a-bb4c3231e6f3)
+
+- **Services**: ![image](https://github.com/user-attachments/assets/d3d991f7-e123-43fe-9a97-3a2a6e72872e)
+
+- **Footer**: ![image](https://github.com/user-attachments/assets/dad9bf78-424f-4268-8e2f-45edc3b29bc1)
+
 
 ## 🏁 Instalasi
 
