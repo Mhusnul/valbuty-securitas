@@ -1,126 +1,235 @@
-import React from "react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, ChevronDown, User, ArrowRight } from "lucide-react";
+import { gsap } from "gsap";
 import logo from "../assets/logo.png";
+import Button from "./Button";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const navRef = useRef(null);
+  const logoRef = useRef(null);
+
+  useEffect(() => {
+    // Initial animation
+    gsap.fromTo(
+      navRef.current,
+      { y: -100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.2 }
+    );
+
+    // Logo animation
+    gsap.fromTo(
+      logoRef.current,
+      { scale: 0, rotation: -180 },
+      { scale: 1, rotation: 0, duration: 1, ease: "back.out(1.7)", delay: 0.5 }
+    );
+
+    // Scroll effect
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuItems = [
+    {
+      name: "About Us",
+      submenu: [
+        "Company Overview",
+        "Vision, Mission & Core Values",
+        "Management",
+        "Corporate Governance",
+        "Career",
+      ],
+    },
+    {
+      name: "Services",
+      submenu: [
+        "Brokerage",
+        "Investment Banking",
+        "Mutual Fund",
+        "Fixed Income",
+      ],
+    },
+    { name: "Research" },
+    { name: "Information" },
+    { name: "Contact Us" },
+  ];
+
+  const toggleMobile = () => {
+    setIsOpen(!isOpen);
+
+    if (!isOpen) {
+      gsap.fromTo(
+        ".mobile-menu",
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+      );
+    }
+  };
+
+  const handleDropdownEnter = (index) => {
+    setActiveDropdown(index);
+  };
+
+  const handleDropdownLeave = () => {
+    setActiveDropdown(null);
+  };
+
   return (
-    <div className="relative z-10">
-      <div className="navbar bg-base-100 shadow-lg md:px-25 pb-5 fixed ">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <a> Item 1</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
-            </ul>
+    <nav
+      ref={navRef}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-lg shadow-xl py-2"
+          : "bg-white shadow-lg py-4"
+      }`}
+    >
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div ref={logoRef} className="flex items-center space-x-3">
+            <img
+              src={logo}
+              alt="KB Valbury Sekuritas"
+              className="h-10 w-auto transition-transform duration-300 hover:scale-110"
+            />
           </div>
-          <img src={logo} alt="logo" />
+
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center space-x-8">
+            {menuItems.map((item, index) => (
+              <div
+                key={index}
+                className="relative group"
+                onMouseEnter={() => handleDropdownEnter(index)}
+                onMouseLeave={handleDropdownLeave}
+              >
+                <button className="flex items-center space-x-1 text-gray-700 hover:text-yellow-600 font-semibold transition-colors duration-300 py-2">
+                  <span>{item.name}</span>
+                  {item.submenu && (
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-300 ${
+                        activeDropdown === index ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
+                </button>
+
+                {/* Dropdown Menu */}
+                {item.submenu && (
+                  <div
+                    className={`absolute top-full left-0 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 ${
+                      activeDropdown === index
+                        ? "opacity-100 visible transform translate-y-0"
+                        : "opacity-0 invisible transform -translate-y-4"
+                    }`}
+                  >
+                    <div className="py-4">
+                      {item.submenu.map((subItem, subIndex) => (
+                        <a
+                          key={subIndex}
+                          href="#"
+                          className="flex items-center px-6 py-3 text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 transition-all duration-200"
+                        >
+                          <ArrowRight
+                            size={14}
+                            className="mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                          />
+                          {subItem}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <Button variant="outline" size="sm" icon={User} iconPosition="left">
+              Login
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600"
+            >
+              Open Account
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMobile}
+            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-6 text-black font-semibold text-lg">
-            <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent dropdown dropdown-hover ">
-                About Us
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="mobile-menu lg:hidden mt-4 pb-4">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="py-4">
+                {menuItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="border-b border-gray-100 last:border-b-0"
+                  >
+                    <button className="w-full flex items-center justify-between px-6 py-4 text-left text-gray-700 hover:text-yellow-600 hover:bg-yellow-50 transition-all duration-200">
+                      <span className="font-semibold">{item.name}</span>
+                      {item.submenu && <ChevronDown size={16} />}
+                    </button>
+
+                    {item.submenu && (
+                      <div className="bg-gray-50 px-6 pb-4">
+                        {item.submenu.map((subItem, subIndex) => (
+                          <a
+                            key={subIndex}
+                            href="#"
+                            className="block py-2 text-gray-600 hover:text-yellow-600 transition-colors duration-200"
+                          >
+                            {subItem}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile CTA */}
+              <div className="p-6 bg-gray-50 space-y-3">
+                <Button
+                  variant="outline"
+                  size="md"
+                  className="w-full"
+                  icon={User}
+                  iconPosition="left"
                 >
-                  <li>
-                    <a>Company Overview</a>
-                  </li>
-                  <li>
-                    <a>Vision, Mission & Core Values</a>
-                  </li>
-                  <li>
-                    <a>Management</a>
-                  </li>
-                  <li>
-                    <a>Corporate Governance</a>
-                  </li>
-                  <li>
-                    <a>Career</a>
-                  </li>
-                </ul>
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent dropdown dropdown-hover">
-                Services
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  Login
+                </Button>
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500"
                 >
-                  <li>
-                    <a> Brokerage</a>
-                  </li>
-                  <li>
-                    <a>Investment Banking</a>
-                  </li>
-                  <li>
-                    <a>Mutual Fund</a>
-                  </li>
-                  <li>
-                    <a>Fixed Income</a>
-                  </li>
-                </ul>
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent ">
-                Research
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent">
-                Information
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-yellow-500 hover:bg-transparent ">
-                Contact Us
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          <a className="bg-yellow-500 px-5 py-2 font-semibold rounded-tr-xl rounded-bl-xl hover:bg-yellow-400 hover:cursor-pointer">
-            Open Account
-          </a>
-        </div>
+                  Open Account
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </nav>
   );
 }
 
